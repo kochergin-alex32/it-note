@@ -1,4 +1,4 @@
-function renderTaskViewPage(id,taskTitle){
+function renderTaskViewPage(task){
 document.body.innerHTML = '';
 const taskViewPage = `<section class="task-view">
 <div class="container">
@@ -6,36 +6,34 @@ const taskViewPage = `<section class="task-view">
 </div>
 </section>`
 document.body.insertAdjacentHTML('afterbegin',taskViewPage)
-showTask(id,taskTitle) ;
+showTask(task) ;
 
 document.querySelector('.task-view').addEventListener('change',function(event) {
     if (event.target.classList.contains('file-image')) {
       
       const img = document.querySelector(".image-edit input").files[0].name;
-       console.log(img);
       document.querySelector('.task-image').src = `img/${img}`;
-      // document.querySelector('.task-image')?.setAttribute('src',img);
-      
+     
     }
   });
 
 };
-
-function showTask(id,taskTitle) {
+// функция для отрисовки таски, в таски она подтягивает значения сохраненные в ls
+function showTask(task) {
    
       var card = `
       <div class="arrow">
       <a href=""id="btn-back"> <i class="bi bi-arrow-90deg-left" data-toggle="tooltip" title="вернуться к задачам"></i></a></div>
-            <div data-id="${id}" class="task-card card mx-auto" style="width: 21rem;">
+            <div data-id="${task.id}" class="task-card card mx-auto" style="width: 21rem;">
                   <div class="image-edit input-group mb-3">
-                    <img  src="img/no-image.png" class="task-image card-img-top">
+                    <img  src="img/${task.image}" class="task-image card-img-top">
                     <label class="" for="inputGroupFile01"><i class="bi bi-pencil"></i></label>
                     <input  type="file" class="d-none form-control file-image" id="inputGroupFile01">
                   </div>
                   <div class="card-body">
-                    <input type="text" class="task-title card-title form-control fst-italic" value="${taskTitle}" placeholder="Введите название задачи">
-                    <textarea class="task-desc card-text form-control mb-2" placeholder="Введите описание задачи"></textarea>
-                    <a href="#" class="btn btn-violet d-block py-2">сохранить</a>
+                    <input type="text" class="task-title card-title form-control fst-italic" value="${task.name}" placeholder="Введите название задачи">
+                    <textarea class="task-desc card-text form-control mb-2" placeholder="Введите описание задачи">${task.description}</textarea>
+                    <a id="task-save" href="#" class="btn btn-violet d-block py-2">сохранить</a>
                   </div>
               </div>
       `;
@@ -45,41 +43,49 @@ function showTask(id,taskTitle) {
         e.preventDefault();
         document.body.innerHTML = '';
         renderTasksPage();
-      });
-       
-  
-    }
-  
+      })
+      //сохранение изменений в таске
+    document.querySelector('#task-save').addEventListener('click',function() {
+     const src = document.querySelector('.task-image')?.src;
+     const arr = src.split('/');
+      
+     const image = arr[arr.length-1];
+     const name = document.querySelector('.task-title').value;
+     const description = document.querySelector('.task-desc').value;
+     const id = document.querySelector('.task-card').dataset.id;
+     console.log(id,image,name,description);
 
-function addTask(form) {
-    // сохранение в ls 
+    //  updateTask()
+      var tasks = JSON.parse(localStorage.getItem('tasks'));
+    const ind = tasks.findIndex(function(item){
+        return item.id == id;
+     })
+     tasks[ind] = {id,name,description,image};
+     localStorage.setItem('tasks',JSON.stringify(tasks));
+
+    })  
   
-    // получили из ls массив tasks
+}
+
+
   
-    // отрендерить задачу на экран с помощью ф rendertask(передаем  задач из ls)
-    const title = form.children[0].value;
-    const task = {name:title,description:'',image:'no-image.png'};
-    renderTask(task);
+// вот эта шляпа мешала записывать таски в локал сториж
+// function addTask(form) {
+//     // сохранение в ls 
+  
+//     // получили из ls массив tasks
+  
+//     // отрендерить задачу на экран с помощью ф rendertask(передаем  задач из ls)
+//     const title = form.children[0].value;
+//     const task = {name:title,description:'',image:'no-image.png'};
+//     renderTask(task);
     
    
-  }
+//   }
 
 
 
 
 
 
-// из первой функции в контейере стояло...
-  //  <div class="task-card card mx-auto" style="width: 21rem;">
-    //     <div class="image-edit input-group mb-3">
-    //       <img  src="img/no-image.png" class="task-image card-img-top">
-    //       <label class="" for="inputGroupFile01"><i class="bi bi-pencil"></i></label>
-    //       <input  type="file" class="d-none form-control" id="inputGroupFile01">
-    //     </div>
-    //     <div class="card-body">
-    //       <input type="text" class="task-title card-title form-control fst-italic" value="${taskTitle}" placeholder="Введите название задачи">
-    //       <textarea class="task-desc card-text form-control" placeholder="Введите описание задачи"></textarea>
-    //       <a href="#" class="btn btn-primary">Go somewhere</a>
-    //     </div>
-    // </div> 
 

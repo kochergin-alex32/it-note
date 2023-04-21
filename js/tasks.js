@@ -38,28 +38,27 @@ document.querySelector('#task-form').addEventListener('submit', function(event) 
 
 
   // получить все задачи из ls
-  var tasks =[
-    {id:'1',name:'task1',description:'some desk',image:'no-image.png'},
-    {id:'2',name:'task2',description:'some desk',image:'no-image.png'},
-    {id:'3',name:'task3',description:'some desk',image:'no-image.png'},
-  ];
-  // tasks.forEach(function(item){
   
-  // });
-  for(const item of tasks){
-    renderTask(item);
-  
-  }
+  var tasks = JSON.parse(localStorage.getItem('tasks')) || null;
+  if(tasks){
+    for(const item of tasks){
+      renderTask(item);
+     }
+    }
   
 
   document.querySelector('#tasks-wrapper').addEventListener('click', function(event){
     if (event.target.classList.contains('arrow-btn')) {
       const id = event.target.parentElement.dataset.id;
-      const taskTitle = event.target.parentElement.querySelector('.task-title').textContent;
-      renderTaskViewPage(id,taskTitle);
+      //функцция которая достаает из ls таски и затем отисовывает их
+      const tasks = JSON.parse(localStorage.getItem('tasks'));
+      const task = tasks.find(function(item){
+        return item.id == id;
+      })
+      renderTaskViewPage(task);
     }
   });
-  // document.querySelector('#tasks-wrapper').addEventListener('click', showTask);
+  
   
 };
 
@@ -78,13 +77,42 @@ ul.insertAdjacentHTML('beforeend',li);
 }
 
 function addTask(form) {
-  // сохранение в ls 
+  const title = form.children[0].value;
+  var task = {name:title,description:'',image:'no-image.png'};
+  // сохранение в ls первый вариант
+  // if (localStorage.getItem('tasks')){
+  //   var tasks = JSON.parse(localStorage.getItem('tasks'));
+  //   tasks.push(task);
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
+  // } else {
+  //   var tasks = [];
+  //   tasks.push(task);
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
+  // }
+  //второй вариант
+    // var tasks = [];
+    // if (localStorage.getItem('tasks')){
+    //   tasks = JSON.parse(localStorage.getItem('tasks'));
+    // }
+    //     tasks.push(task);
+    //     localStorage.setItem('tasks', JSON.stringify(tasks));
+        //либо третий варик
+
+        var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        //вот этот if меняет id в записываемых тасках
+        if(tasks.length > 0) {
+         task.id = tasks[tasks.length-1].id +1
+        } else {
+          task.id = 1;
+        }
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+
 
   // получили из ls массив tasks
 
   // отрендерить задачу на экран с помощью ф rendertask(передаем  задач из ls)
-  const title = form.children[0].value;
-  const task = {name:title,description:'',image:'no-image.png'};
+ 
   renderTask(task);
   
  
@@ -93,34 +121,10 @@ function addTask(form) {
 
 
 
-// function showTask() {
-//   if (event.target.classList.contains('arrow-btn')) {
-//     const taskTitle = event.target.parentElement.querySelector('.task-title').textContent;
-// // https://cdn.5bestthings.com/wp-content/uploads/2019/11/Business-Tasks-1024x630.jpg
-//     var card = `
-//           <div class="task-card card mx-auto" style="width: 21rem;">
-//                 <div class="image-edit input-group mb-3">
-//                   <img  src="img/no-image.png" class="task-image card-img-top">
-//                   <label class="" for="inputGroupFile01"><i class="bi bi-pencil"></i></label>
-//                   <input  type="file" class="d-none form-control file-image" id="inputGroupFile01">
-//                 </div>
-//                 <div class="card-body">
-//                   <input type="text" class="task-title card-title form-control fst-italic" value="${taskTitle}" placeholder="Введите название задачи">
-//                   <textarea class="task-desc card-text form-control mb-2" placeholder="Введите описание задачи"></textarea>
-//                   <a href="#" class="btn btn-violet d-block py-2">сохранить</a>
-//                 </div>
-//             </div>
-//     `;
 
-//     document.querySelector('.task-view .container').insertAdjacentHTML('beforeend',card)
+// const img = document.querySelector(".image-edit input").files[0].name;
 
-//   }
-// }
-
-const img = document.querySelector(".image-edit input").files[0].name;
-
-document.querySelector('.task-image')?.setAttribute('src',`img/${img}`);
-
+// document.querySelector('.task-image')?.setAttribute('src',`img/${img}`);
 
 
 

@@ -74,7 +74,7 @@ body{
    color: white;
     font-size: 20px;
  /* transform: scale(0.7); */
-    text-shadow: 0 0 15px black;
+    text-shadow: 0 0 5px black;
 }
 .logo  {
     background-image: linear-gradient(to right, #6148c8, #be5bfb);
@@ -107,10 +107,27 @@ body{
 .form-login button:nth-of-type(1):hover{
 color: #bbb;
 }
-/* .login{
-    position: relative;
-} */
+.login, .task-view{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+   
+}
+.login .container, .task-view .container{
+    border-radius: 5px;
+}
 .login-error{
     
     position: absolute;
+}
+.nav{
+    margin-top: 20px;
+}
+.nav .container{
+    border-radius: 5px 5px 0 0;
+}
+.tasks .container{
+    border-radius: 0 0 5px 5px; 
 }

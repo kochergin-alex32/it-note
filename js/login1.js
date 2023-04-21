@@ -21,7 +21,10 @@ function renderLoginPage(){//функция отрисовки страницы 
            var email = document.querySelector('#email').value;
            var password = document.querySelector('#password').value;
            console.log(email,password);
-           const users = JSON.parse(localStorage.getItem('users'));
+
+           //проерка на то существуует в ls уже данные или нет, если существуют то берем парсим и сравниваем,а если нет
+        if(localStorage.getItem('users')){
+            const users = JSON.parse(localStorage.getItem('users'));
             //функция для сравнения пароле и почты вводимых с уже зарегестрироваными в ls также необходимо проверить пусто в ls или нет
           var user =  users.find(function(item){
             // if(email == item.email && password == item.password){
@@ -36,10 +39,20 @@ function renderLoginPage(){//функция отрисовки страницы 
             <div class="login-error alert alert-danger" role="alert">
             неверно введены логин или пароль!
                 </div>`)
-           }else{
-            localStorage.setItem('authUser',user.id)
+           } else {//эта часть рендерит страницу с тасками если пользователь авторизовался(вошел)
+            localStorage.setItem('authUser',user.id);
+            document.body.innerHTML = "";
+            renderTasksPage();
            }
-            console.log(user)
+        } else {
+            document.querySelector('.login-error')?.remove();
+            document.querySelector('.login .container').insertAdjacentHTML('afterbegin',`
+            <div class="login-error alert alert-danger" role="alert">
+            пользователь с такими данными не зареган!
+                </div>`)
+        }
+          
+           
         });
     }
 }
@@ -76,7 +89,11 @@ function loginPageMarkup(){
 `;
 }
 function isAuth(){//функция для авторизации
-  
-
+  if(localStorage.getItem('authUser')){
+   return true;
+  } else {
     return false;
-}
+    }
+  }
+
+    
