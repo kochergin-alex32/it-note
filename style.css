@@ -131,3 +131,26 @@ color: #bbb;
 .tasks .container{
     border-radius: 0 0 5px 5px; 
 }
+#delete-task{
+    margin-top: 10px;
+    
+}
+.form-register> .modal-body> div{
+    position: relative;
+}
+.form-register > div input{
+    border-radius: 18px;
+}
+.form-register button{
+    border: 1px solid #999;
+    border-radius: 18px;
+    margin-bottom: 10px;
+}
+.form-register button:nth-of-type(1){
+    background-image: linear-gradient(to right, #6148c8, #be5bfb);
+    color: #fff;
+   
+}
+.form-register button:nth-of-type(1):hover{
+color: #bbb;
+}

@@ -20,10 +20,20 @@ function renderTasksPage(){
           </li>
           <li class="list-group-item rounded border-0 shadow p-3 mb-2 bg-body-tertiary fw-bold">A third item <i class="bi bi-chevron-right"></i> </li>-->
       </ul>
+      <hr>
+      <button id="clear-all" class="btn btn-danger w-100"> elfkbnm</button>
   </div>
 </section>
 `;
 document.body.insertAdjacentHTML('afterbegin',tasksPage);
+document.querySelector('#clear-all').addEventListener('click', function(){
+  if(confirm('вы уверены?')){
+    localStorage.removeItem('tasks');
+    document.body.innerHTML = '';
+    renderTasksPage()
+    
+  }
+})
 
 document.querySelector('#task-form').addEventListener('submit', function(event) {
   event.preventDefault();

@@ -55,7 +55,40 @@ function renderLoginPage(){//функция отрисовки страницы 
            
         });
     }
-}
+    document.querySelector('.modal .form-register').addEventListener('submit',function(){
+     const name = document.querySelector('.form-register #modal-name').value;
+     const email = document.querySelector('.form-register #modal-email').value;
+     const password = document.querySelector('.form-register #modal-password').value;
+
+     registerUser(name, email, password);
+     
+    })
+    
+    
+  }
+  
+  function registerUser(name, email, password){
+  //эта достаетмассив с юзерами или пустой создает еси их нет
+     var users = JSON.parse(localStorage.getItem('users')) || [];
+    if(users.length>0){
+      //дальше идет сравнение пчты вводимой с уже существующими  и в случае совпадения выдается окночто пользователь с таким мылом уже есть, в противном сучае создает новый объект,пушит его в массив с пользователями и отправляет в LS
+    const isUserInLs = users.find(function(user){
+      return user.email == email;
+    })
+    if(isUserInLs){
+      document.querySelector('.modal .modal-boby').insertAdjacentHTML('beforebegin', `<div class="alert alert-warning" role="alert">
+      Пользователь с таким мылом уже есть!
+     </div>`)
+    }else{
+      const id = users[users.length-1].id+1;
+      const user = {id, email, password, name};
+      users.push(user);
+      localStorage.setItem('users',JSON.stringify(users));
+      //недопилили увеомление о регистрации
+      //есть какието траблы закрывается модальное окно при регистрации
+    }
+    }
+  }
 
 function loginPageMarkup(){
     return `<section  class="login">
@@ -81,12 +114,52 @@ function loginPageMarkup(){
                 </div>
                
                 <button type="submit" class=" w-100 btn ">войти</button>
-                <button type="submit" class=" w-100 btn ">зарегаться</button>
+                <button onclick="return false" data-bs-toggle="modal" data-bs-target="#registerModal"  class=" w-100 btn ">зарегаться</button>
               </form>
         </div>
     </div>
 </section>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade " id="registerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" >регистрация пользователя</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="form-register needs-validation" novalidate>
+                <div class="modal-body">
+
+                <div class="mb-3">  
+                <input type="text" class="form-control" id="modal-name" name="name" placeholder="введи-ка имя">
+                
+              </div>
+
+                <div class="mb-3">
+                  <input type="email" class="form-control" id="modal-email" name="email" placeholder="введи-ка почту">
+                  
+                </div>
+                <div class="mb-3">
+                 
+                  <input type="password" class="form-control" id="modal-password" name="password" placeholder="введи-ка пароль">
+                </div>
+               </div>
+
+                <div class="modal-footer">
+                   <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+
+                   <button id="register" type="submit" class=" w-100 btn ">зарегаться</button>
+                   
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 `;
+
 }
 function isAuth(){//функция для авторизации
   if(localStorage.getItem('authUser')){
