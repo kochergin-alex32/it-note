@@ -54,15 +54,15 @@ function renderLoginPage(){//функция отрисовки страницы 
           
            
         });
+        document.querySelector('.modal .form-register').addEventListener('submit',function(){
+         const name = document.querySelector('.form-register #modal-name').value;
+         const email = document.querySelector('.form-register #modal-email').value;
+         const password = document.querySelector('.form-register #modal-password').value;
+    
+         registerUser(name, email, password);
+         
+        });
     }
-    document.querySelector('.modal .form-register').addEventListener('submit',function(){
-     const name = document.querySelector('.form-register #modal-name').value;
-     const email = document.querySelector('.form-register #modal-email').value;
-     const password = document.querySelector('.form-register #modal-password').value;
-
-     registerUser(name, email, password);
-     
-    })
     
     
   }
