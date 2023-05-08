@@ -1,9 +1,48 @@
 function renderTasksPage(){
+  const userId = localStorage.getItem('authUser');
+  const authUser = JSON.parse(localStorage.getItem('users')).find(function(item){
+    return item.id == userId;
+  });
+
   var tasksPage = `  <section class="nav">
-  <div class="container">
+  <div class=" container">
       <form id="task-form" class="d-flex">
           <input id="task-data" type="text" class="form-control me-1" placeholder="Введите название задачи">
           <input type="submit" class="btn btn-violet" value="Добавить">
+
+         
+           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+              <i class="navbar-toggler-icon bi bi-person-circle fs-3 pt-2 ps-3"></i>
+      
+         </button>
+
+         
+          
+          <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">${authUser.name}</h5>
+        <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">редактировать профиль</a>
+          </li>
+         
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex mt-3 " role="search">
+          <input class=" d-inline-block w-75 form-control me-2" type="search" placeholder="поиск задач" aria-label="Search">
+          <button class="btn btn-violet px-2 py-1" type="submit">найти</button>
+        </form>
+        <button id="logout" class="btn btn-danger w-100 px-2 py-1 mt-3" ">выход</button>
+      </div>
+    </div>
+  </div>
+
+
+
       </form>
   </div>
 </section>
@@ -21,11 +60,17 @@ function renderTasksPage(){
           <li class="list-group-item rounded border-0 shadow p-3 mb-2 bg-body-tertiary fw-bold">A third item <i class="bi bi-chevron-right"></i> </li>-->
       </ul>
       <hr>
-      <button id="clear-all" class="btn btn-danger w-100"> elfkbnm</button>
+      <button id="clear-all" class="btn btn-danger w-100"> очистить список задач</button>
   </div>
 </section>
 `;
 document.body.insertAdjacentHTML('afterbegin',tasksPage);
+
+document.querySelector('#logout').addEventListener('click',function(){
+localStorage.removeItem('authUser');
+renderLoginPage()
+})
+
 document.querySelector('#clear-all').addEventListener('click', function(){
   if(confirm('вы уверены?')){
     localStorage.removeItem('tasks');
@@ -35,15 +80,17 @@ document.querySelector('#clear-all').addEventListener('click', function(){
   }
 })
 
-document.querySelector('#task-form').addEventListener('submit', function(event) {
+document.querySelector('#task-form input[type="submit"]').addEventListener('click', function(event) {
   event.preventDefault();
+  if(event.target.matches('#task-form input[type="submit"]')){
   if (document.querySelector('#task-data').value !== '') {
-    // сохраняем в ls
-    addTask(this);
+    // сохраняем в ls, дописали  k this. parentElement потому что зис это кнопка здесь а событие нужно на форму на родителя
+    addTask(this.parentElement);
     document.querySelector('#task-data').value = "";
   } else {
     alert('Введено пусто значение');
   }
+}
 });
 
 
@@ -119,23 +166,12 @@ function addTask(form) {
         localStorage.setItem('tasks', JSON.stringify(tasks));
 
 
-  // получили из ls массив tasks
-
-  // отрендерить задачу на экран с помощью ф rendertask(передаем  задач из ls)
+  
  
   renderTask(task);
   
  
 }
-
-
-
-
-
-// const img = document.querySelector(".image-edit input").files[0].name;
-
-// document.querySelector('.task-image')?.setAttribute('src',`img/${img}`);
-
 
 
 
