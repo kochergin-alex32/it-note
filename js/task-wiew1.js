@@ -38,7 +38,7 @@ function renderTaskViewPage(task){
                 <div data-id="${task.id}" class="task-card card mx-auto" style="width: 21rem;">
                       <div class="image-edit input-group mb-3">
                      <!-- изменеие пути для сохранения <img  src="img/${task.image}" class="task-image card-img-top">-->
-                        <img  src="${task.image}" class="task-image card-img-top">
+                        <img  src="${task.image}" class="task-image w-img card-img-top">
                         <label class="" for="inputGroupFile01"><i class="bi bi-pencil"></i></label>
                         <input  type="file" class="d-none form-control file-image" id="inputGroupFile01">
                       </div>

@@ -21,6 +21,13 @@ body{
 
 .image-edit {
     position: relative;
+   
+}
+.w-img{
+    /* border: 1px solid red; */
+    max-height: 15em;
+    
+
 }
 .image-edit label i {
     position: absolute;
