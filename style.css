@@ -25,7 +25,11 @@ body{
 }
 .w-img{
     /* border: 1px solid red; */
-    max-height: 15em;
+    object-fit:contain;
+    max-height: 350px;
+    
+
+
     
 
 }
