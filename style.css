@@ -30,6 +30,7 @@ body{
     
 
 
+
     
 
 }
@@ -164,4 +165,8 @@ color: #bbb;
 }
 .form-register button:nth-of-type(1):hover{
 color: #bbb;
+}
+.hide{
+   color:red;
+   
 }

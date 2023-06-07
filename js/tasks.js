@@ -17,7 +17,9 @@ function renderTasksPage(){
          </button>
 
          
-          
+         
+
+
           <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">${authUser.name}</h5>
@@ -33,8 +35,8 @@ function renderTasksPage(){
           </li>
         </ul>
         <form class="d-flex mt-3 " role="search">
-          <input class=" d-inline-block w-75 form-control me-2" type="search" placeholder="поиск задач" aria-label="Search">
-          <button class="btn btn-violet px-2 py-1" type="submit">найти</button>
+          <input id="inpFilter"class=" d-inline-block w-75 form-control me-2" type="search" placeholder="поиск задач" aria-label="Search">
+          <button id="filter" class="btn btn-violet px-2 py-1" type="submit">найти</button>
         </form>
         <button id="logout" class="btn btn-danger w-100 px-2 py-1 mt-3" ">выход</button>
       </div>
@@ -117,6 +119,22 @@ document.querySelector('#task-form input[type="submit"]').addEventListener('clic
   });
   
   
+//функция для филтрации записей в таскере
+document.querySelector('#filter').addEventListener('click', function(e){
+  e.preventDefault()
+var filter = document.querySelector('#inpFilter').value.trim()
+console.log(filter);
+var filterTasc = JSON.parse(localStorage.getItem('tasks'));
+filterTasc.forEach(function(elem){
+// console.log(elem.name);
+  if(elem.name.search(filter)!= -1){
+    console.log(elem);
+ 
+    }
+})
+  
+})
+
 };
 
 
@@ -172,6 +190,31 @@ function addTask(form) {
   
  
 }
+
+
+
+
+
+
+
+//   function filterTasks(){// описание функции филтер,сначала через квери селектор ол берем все значения как массив,переписываем это в константу that,дальше через цикл forEah и if оставляем тоько те в которых есть совпадения также в if используем trim()чтобы она брала именно значение а все не нужнуе пробелы обрезала
+    
+//     const liArr = document.querySelectorAll('.collection li');
+//     const that = this;
+
+// //также с помощью метода.toLowerCase() мы делаем чтобы вводимые  в фильтр и фильтруемые записи были в одном регистре и сравнивались соответствено льлько по значению.
+//     liArr.forEach(function (li,ind) {
+//      if(li.textContent.trim().toLowerCase().indexOf(that.value.toLowerCase())>-1){
+//         //li.hidden тру или фолс это значит ли скрыть - ту или фолс
+//         li.hidden = false
+//      }else{
+//         li.hidden = true
+//      }
+//     });
+// console.log(this.value);
+//   }
+
+  
 
 
 
