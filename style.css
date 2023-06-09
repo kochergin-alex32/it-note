@@ -167,6 +167,9 @@ color: #bbb;
 color: #bbb;
 }
 .hide{
+    visibility: hidden;
+    position: absolute;
+    /* display: none; */
    color:red;
    
 }
