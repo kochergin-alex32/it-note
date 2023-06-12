@@ -11,7 +11,7 @@ function renderTasksPage(){
           <input type="submit" class="btn btn-violet" value="Добавить">
 
          
-           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+           <button class="navbar-toggler"  id="c" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
               <i class="navbar-toggler-icon bi bi-person-circle fs-3 pt-2 ps-3"></i>
       
          </button>
@@ -118,29 +118,7 @@ document.querySelector('#task-form input[type="submit"]').addEventListener('clic
     }
   });
   
-  
-
-
-
-document.querySelector('#filter').addEventListener('click', function(e){
-  e.preventDefault()
-var filter = document.querySelector('#inpFilter').value.trim()
-console.log(filter);
-var filterTasc = document.querySelectorAll('.task');
-
-filterTasc.forEach(function(elem){
-console.log(elem.innerText);
-  if(elem.innerText.search(filter)== -1){
-    console.log(elem);
-    elem.classList.add('hide')
-    }
-})
-  
-})
-
-
-
-
+  FT(tasksPage)
 };
 
 
