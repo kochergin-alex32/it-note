@@ -20,10 +20,10 @@ function renderTasksPage(){
          
 
 
-          <div class="offcanvas offcanvas-end " tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+          <div class="offcanvas offcanvas-end clos" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">${authUser.name}</h5>
-        <button type="button" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" id="xx" class="btn-close btn-close-dark" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
@@ -36,7 +36,7 @@ function renderTasksPage(){
         </ul>
         <form class="d-flex mt-3 " role="search">
           <input id="inpFilter"class=" d-inline-block w-75 form-control me-2" type="search" placeholder="поиск задач" aria-label="Search">
-          <button id="filter" class="btn btn-violet px-2 py-1" type="submit">найти</button>
+          <button id="filter" class="btn btn-violet px-2 py-1" type="submit" data-bs-dismiss="offcanvas">найти</button>
         </form>
         <button id="logout" class="btn btn-danger w-100 px-2 py-1 mt-3" ">выход</button>
       </div>

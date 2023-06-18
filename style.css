@@ -1,4 +1,5 @@
 body{
+   
     height: 100vh;
     background-image: linear-gradient(to top right, rgb(46,1,104),violet);
 }
@@ -174,3 +175,7 @@ color: #bbb;
   
    
 }
+/* .clos{
+
+overflow:visible;
+} */
